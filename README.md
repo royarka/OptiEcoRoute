@@ -1,7 +1,9 @@
 **OptiEcoRoute**
+
 It is a Flask web application which finds the lowest cost travel route between two location i.e. source and destination using A* (A star) search algorithm.
 The project represents locations as nodes in a weighted graph and roads as edges with associated travel costs. After finding the route, OptiEcoRoute displays it on an interactive map using Folium.
 Created for demonstration and educational purposes.
+
 **Features**
 - Find a lowest cost route.
 - Based on A* or A star search algorithm.
@@ -9,6 +11,7 @@ Created for demonstration and educational purposes.
 - Interactive map using Folium.
 - Displays the complete route by plotting lines.
 - Shows the total route cost
+
 **Technologies Used**
 - Python
 - Flask
