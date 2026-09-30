@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OptiEcoRoute</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/output.css') }}"
+    />
+  </head>
+  <body class="m-0 h-screen w-screen">
+    <div class="relative h-screen w-screen">
+      <div class="absolute inset-0 z-0">{{ map_html | safe }}</div>
+      <div class="absolute z-10 m-4 bg-white shadow-2xl rounded-2xl">
+        <div class="flex h-full flex-col px-8 py-3">
+          <section class="w-full max-w-4xl text-center">
+        <h1
+          class="text-6xl font-bold tracking-tight text-slate-800 md:text-7xl"
+        >
+          <span class="text-amber-600">Opti</span
+          ><span class="text-green-400">Eco</span>Route<span
+            class="inline-block animate-bounce"
+            >&#127811;</span
+          >
+        </h1>
+        <p
+          class="text-xs mb-4 font-bold tracking-tight text-slate-800 md:text-lg"
+        >
+          Find the
+          <span class="text-purple-600 animate-pulse">best route!</span>
+        </p>
+        <form
+          action="/result"
+          method="POST" 
+          class="mb-4 flex flex-col w-full items-center gap-2 rounded-3xl border border-blue-300 bg-white/95 p-2.5 backdrop-blur"
+        >
+          <input
+            value="{{source}}"
+            name="source"
+            class="h-12 w-full rounded-full bg-purple-50 px-3 text-xl text-purple-950 outline-none transition duration-200 placeholder:text-purple-400 focus:bg-white focus:ring-2 focus:ring-purple-300"
+            type="text"
+            placeholder="Start your journey"
+          />
+          <input
+            value="{{destination}}"
+            name="destination"
+            class="h-12 w-full rounded-full bg-purple-50 px-3 text-xl text-purple-950 outline-none transition duration-200 placeholder:text-purple-400 focus:bg-white focus:ring-2 focus:ring-purple-300"
+            type="text"
+            placeholder="Destination"
+          />
+          <button
+            class="group flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center !rounded-full bg-purple-950 text-white transition-all duration-300 hover:rotate-[360deg] hover:bg-purple-600 active:scale-90"
+          >
+            <span class="text-xl group-hover:hidden">
+              Go
+            </span>
+
+            <span class="hidden text-2xl group-hover:block">
+              &#8680;
+            </span>
+          </button>
+        </form>
+        {% if error %}
+        <div
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+        >
+          <div class="w-80 rounded-2xl bg-white p-6 text-center shadow-xl">
+            <div class="mb-3 text-3xl">⚠️</div>
+            <h2 class="mb-2 text-lg font-semibold text-gray-800">
+              Invalid Input
+            </h2>
+            <p class="mb-5 text-sm text-gray-600">{{ error }}</p>
+            <button
+              onclick="this.closest('.fixed').remove()"
+              class="rounded-full bg-purple-950 px-6 py-2 text-sm font-medium text-white transition hover:bg-purple-600"
+            >
+              Okay
+            </button>
+          </div>
+        </div>
+        {% endif %}
+         
+            <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+              <p class="mb-2 font-medium uppercase tracking-wide text-gray-500">
+                Route
+              </p>
+              <p class=" font-semibold leading-7 text-gray-900">
+                {% for place in route %}
+                  {{ place }}{% if not loop.last %} → {% endif %}
+                  {% if loop.index is divisibleby 4 and not loop.last %}<br>{% endif %}
+                {% endfor %}
+              </p>
+            </div>
+            <div class="mt-3 flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3">
+              <p class="font-medium text-gray-500">
+                Total Distance
+              </p>
+              <p class="font-bold text-gray-900">
+                {{ total_cost }} <span class="text-sm font-medium text-gray-500">km</span>
+              </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
